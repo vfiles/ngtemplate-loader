@@ -9,6 +9,7 @@ module.exports = function (content) {
     var ngModule = getAndInterpolateOption.call(this, 'module', 'ng'); // ng is the global angular module that does not need to explicitly required
     var relativeTo = getAndInterpolateOption.call(this, 'relativeTo', '');
     var prefix = getAndInterpolateOption.call(this, 'prefix', '');
+    var templateName = getAndInterpolateOption.call(this, 'templateName', '');
     var requireAngular = !!options.requireAngular || false;
     var absolute = false;
     var pathSep = options.pathSep || '/';
@@ -53,7 +54,7 @@ module.exports = function (content) {
         html = content;
     }
 
-    return "var path = '"+jsesc(filePath)+"';\n" +
+    return "var path = '"+jsesc(templateName)+"';\n" +
         "var html = " + html + ";\n" +
         (requireAngular ? "var angular = require('angular');\n" : "window.") +
         "angular.module('" + ngModule + "').run(['$templateCache', function(c) { c.put(path, html) }]);\n" +
